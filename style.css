@@ -1,0 +1,189 @@
+/** colour palette */
+:root {
+  --colour-correct: #6aaa64;
+  --colour-incorect: #878a8c;
+  --colour-misplaced: #c9b458;
+  --colour-key: #c2c2c2;
+  --colour-key-hover: #e3e2e2;
+}
+/** colour palette end */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /*TODO change font*/
+  font-family: "Fira sans", sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/** keyboard styling */
+.keyboard-container {
+  /* width: 630px; */
+  display: grid;
+  grid-template-columns: repeat(20, minmax(auto, 1.2em));
+  grid-auto-rows: 3.5em;
+  gap: 0.25em;
+  padding: 0.7em;
+}
+
+.keyboard-container button {
+  border: none;
+  border-radius: 0.2em;
+  background-color: var(--colour-key);
+
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+
+  text-transform: uppercase;
+}
+
+.keyboard-container button:hover {
+  background-color: var(--colour-key-hover);
+}
+
+.keyboard-container .key {
+  grid-column: span 2;
+}
+
+.keyboard-container .key-large {
+  grid-column: span 3;
+}
+
+.keyboard-container .logo-backspace span {
+  display: block;
+  pointer-events: none; /* prevent click on span - there is a bug in WebKit */
+}
+
+/** keyboard styling end */
+
+/** user grid and keys styling */
+.user-grid-container .cell[data-state="green"],
+.keyboard-container .key[data-state="green"] {
+  background-color: var(--colour-correct);
+}
+
+.user-grid-container .cell[data-state="gray"],
+.keyboard-container .key[data-state="gray"] {
+  background-color: var(--colour-incorect);
+}
+
+.user-grid-container .cell[data-state="yellow"],
+.keyboard-container .key[data-state="yellow"] {
+  background-color: var(--colour-misplaced);
+}
+
+/** user grid and keys styling end */
+
+/** user grid styling */
+.user-grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 4.5em);
+  grid-template-rows: repeat(6, 4.5em);
+  gap: 0.35em;
+  flex-grow: 1;
+  justify-content: center;
+  align-content: center;
+}
+
+.user-grid-container .cell {
+  border: 0.01em solid #bebebe;
+  font-size: 3em;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  transition: transform 250ms linear;
+}
+.user-grid-container .cell[data-state="current"] {
+  border-color: #000000;
+}
+/** user grid styling end */
+
+/** Animations and transitions styling start*/
+.user-grid-container .cell[data-state="current"] {
+  animation: up-down-scale 100ms ease-in-out;
+  
+}
+
+.user-grid-container .cell:hover {
+  animation: rotate-vertically 1000ms linear;
+  /* animation: rotate-vertically_rev 1000ms linear; */
+  /* transition: transform 250ms linear; */
+  /* transform: rotateX(90deg); */
+}
+
+.user-grid-container .cell.animate {
+  animation: rotate-vertically 500ms linear;
+  /* animation: up-down-scale 100ms ease-in-out; */
+}
+
+
+@keyframes up-down-scale {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.1);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* @keyframes up-down-scale {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+  }
+} */
+
+@keyframes rotate-vertically {
+  from {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+}
+@keyframes rotate-vertically_rev {
+  from {
+    transform: rotateX(0deg);
+  }
+  /* 50% {
+    transform: rotateX(90deg);
+  } */
+  to {
+    transform: rotateX(-30deg);
+  }
+}
+/** Animations and transitions styling end*/
